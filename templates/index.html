@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Todo List</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Todo List</h1>
+    {% if tasks|length == 0 %}
+        <h3>You have no tasks</h3>
+    <table>
+
+        <tr>
+            <th>task</th>
+            <th>added</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.content }}</td>
+            <td>{{ task.date_created.date() }}</td>
+            <td>
+                <a href="{{ url_for('delete', id=task.id) }}">Delete</a>
+                <a href="{{ url_for('update', id=task.id) }}">Update</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <form action="/" method="POST">
+        <input type="text" name="content">
+        <input type="submit" value="Add">
+    </form>
+</div>
+{% endblock %}
+
